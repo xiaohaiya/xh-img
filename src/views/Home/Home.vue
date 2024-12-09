@@ -16,7 +16,7 @@
         <RadioGroup default-value="sync" class="flex items-center gap-4 [&>label]:flex [&>label]:items-center [&>label]:space-x-2 [&>label]:cursor-pointer">
           <Label for="sync">
             <RadioGroupItem id="sync" value="sync" />
-            <span>Imgur</span>
+            <span>XHIMG</span>
           </Label>
           <Label for="nosync">
             <RadioGroupItem id="nosync" value="nosync" disabled />
