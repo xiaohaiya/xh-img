@@ -27,7 +27,7 @@
           <a title="打赏站长" target="_blank" href="/reward.webp">
             <img class="w-8" src="@/assets/images/footer/shang.svg" />
           </a>
-          <a title="Github" target="_blank" rel="nofollow" href="https://github.com/xiaohaiya">
+          <a title="Github" target="_blank" rel="nofollow" href="https://pdha.top/">
             <img class="w-8" src="@/assets/images/footer/github.svg" />
           </a>
           <a title="胖大海博客" target="_blank" href="https://pdha.top/">
