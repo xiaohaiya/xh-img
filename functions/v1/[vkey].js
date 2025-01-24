@@ -1,81 +1,23 @@
-async function encrypt(text, key) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-
-    const iv = crypto.getRandomValues(new Uint8Array(12));
-
-    const encrypted = await crypto.subtle.encrypt(
-        {
-            name: "AES-GCM",
-            iv: iv
-        },
-        key,
-        data
-    );
-
-    const ivHex = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
-    const encryptedHex = Array.from(new Uint8Array(encrypted)).map(b => b.toString(16).padStart(2, '0')).join('');
-
-    return {
-        iv: ivHex,
-        encryptedData: encryptedHex
-    };
-}
-
-async function decrypt(encryptedData, iv, key) {
-    const decoder = new TextDecoder();
-    const ivArray = new Uint8Array(iv.match(/.{2}/g).map(byte => parseInt(byte, 16)));
-    const encryptedArray = new Uint8Array(encryptedData.match(/.{2}/g).map(byte => parseInt(byte, 16)));
-
-    const decrypted = await crypto.subtle.decrypt(
-        {
-            name: "AES-GCM",
-            iv: ivArray
-        },
-        key,
-        encryptedArray
-    );
-
-    return decoder.decode(decrypted);
-}
-
-// 使用示例
-async function main() {
-    const key = await crypto.subtle.generateKey(
-        {
-            name: "AES-GCM",
-            length: 256,
-        },
-        true,
-        ["encrypt", "decrypt"]
-    );
-
-    const text = "Hello, World!";
-
-    const encrypted = await encrypt(text, key);
-    console.log("Encrypted:", encrypted);
-
-    const decrypted = await decrypt(encrypted.encryptedData, encrypted.iv, key);
-    console.log("Decrypted:", decrypted);
-}
-
 export async function onRequestGet({ request }) {
-  const { url, method, headers, body } = request;
-  const newUrl = new URL(url);
-  const key = await crypto.subtle.generateKey(
-        {
-            name: "AES-GCM",
-            length: 256,
-        },
-        true,
-        ["encrypt", "decrypt"]
-    );
+  const { url, method, headers, body } = request
+  const newUrl = new URL(url)
 
-    const text = "Hello, World!";
-
-    const encrypted = await encrypt(text, key);
-    console.log("Encrypted:", encrypted);
-
-    const decrypted = await decrypt(encrypted.encryptedData, encrypted.iv, key);
-    console.log("Decrypted:", decrypted);
+  let score = 55;
+   
+  if (score >= 60) {
+      console.log("及格");
+      console.log(newUrl.pathname);
+  } else {
+      console.log("不及格");
+      console.log(newUrl.pathname);
+  }
+  /*return fetch(`https://i.imgur.com/${newUrl.pathname.replace('vh-img-proxy', '')}`, {
+    method,
+    headers: {
+      ...headers,
+      referer: 'https://www.vhimg.com',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+    },
+    body
+  })*/
 }
