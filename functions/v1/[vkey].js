@@ -11,6 +11,7 @@ export async function onRequestGet({ request }) {
       console.log("不及格");
       console.log(newUrl.pathname);
   }
+  return newUrl;
   /*return fetch(`https://i.imgur.com/${newUrl.pathname.replace('vh-img-proxy', '')}`, {
     method,
     headers: {
