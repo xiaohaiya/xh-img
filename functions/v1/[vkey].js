@@ -59,4 +59,23 @@ async function main() {
     console.log("Decrypted:", decrypted);
 }
 
-main().catch(console.error);
+export async function onRequestGet({ request }) {
+  const { url, method, headers, body } = request;
+  const newUrl = new URL(url);
+  const key = await crypto.subtle.generateKey(
+        {
+            name: "AES-GCM",
+            length: 256,
+        },
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    const text = "Hello, World!";
+
+    const encrypted = await encrypt(text, key);
+    console.log("Encrypted:", encrypted);
+
+    const decrypted = await decrypt(encrypted.encryptedData, encrypted.iv, key);
+    console.log("Decrypted:", decrypted);
+}
